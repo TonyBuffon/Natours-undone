@@ -1,5 +1,5 @@
 /* eslint-disable */
-import axios from 'axios';
+import axios from './node_modules/axios/index.js';
 import { showAlert } from './alerts';
 
 export const login = async (email, password) => {
@@ -36,3 +36,27 @@ export const logout = async () => {
     showAlert('error', 'Error logging out! Try again.');
   }
 };
+
+export const signup = async ( email ,name, password,passwordConfirm )=>{
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: 'http://127.0.0.1:3000/api/v1/users/signup',
+      data: {
+        email,
+        password,
+        name,
+        passwordConfirm,
+      }
+    });
+
+    if (res.data.status === 'success') {
+      showAlert('success', 'created successfully!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
+  } catch(err){
+    showAlert('error', err.response.data.message);
+  }
+}

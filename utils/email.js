@@ -7,28 +7,26 @@ module.exports = class Email {
         this.to = user.email;
         this.firstName = user.name.split(' ')[0];
         this.url = url
-        this.from = `Tony Samy <${process.env.EMAIL_FROM}>`
+        this.from = `Tony Samy <${process.env.SENT_FROM}>`
     }
     newTransport() {
-        if (process.env.NODE_ENV === 'production') {
             // Sendgrid
             return nodemailer.createTransport({
                 service: 'SendGrid',
                 auth: {
                     user: process.env.SENDGRID_USERNAME,
-                    pass: process.env.SENDGRID_PASSWORD
+                    pass: process.env.SENDGRID_API_KEY
                 }
             })
-        }
-        return nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD
-            }
-            // ACTIVATE IN GMAIL " less secure app" OPTION
-        })
+        // return nodemailer.createTransport({
+        //     host: process.env.EMAIL_HOST,
+        //     port: process.env.EMAIL_PORT,
+        //     auth: {
+        //         user: process.env.EMAIL_USERNAME,
+        //         pass: process.env.EMAIL_PASSWORD
+        //     }
+        //     // ACTIVATE IN GMAIL " less secure app" OPTION
+        // })
     }
     async send(template, subject) {
         // Send the actual email
@@ -58,17 +56,4 @@ module.exports = class Email {
     async sendPasswordReset() {
         await this.send('passwordReset', 'Your password reset token (valid for only 10 minutes)')
     }
-}
-const sendEmail = async options => {
-
-    // 2) Define the Email options
-    const mailOptions = {
-        from: "Tony Samy ",
-        to: options.email,
-        subject: options.subject,
-        text: options.message
-        // html:
-    }
-    // 3) Actually send the email
-    await transporter.sendMail(mailOptions)
 }

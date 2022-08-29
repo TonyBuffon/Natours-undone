@@ -1,0 +1,23 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "dependencies": {
+    "axios": "^0.27.2"
+  },
+  "devDependencies": {
+    "@types/mapbox-gl": "^2.4.2",
+    "ndb": "^1.1.5",
+    "parcel": "^2.7.0"
+  },
+  "scripts": {
+    "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel build ./index.js --dist-dir ./public/js "
+  },
+  "engines": {
+    "node": "^10.0.0"
+  },
+  "author": "Tony",
+  "license": "ISC"
+}
